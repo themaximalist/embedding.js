@@ -1,7 +1,7 @@
 {
   "name": "@themaximalist/embedding.js",
-  "version": "0.0.2",
-  "description": "Easy embeddings for LLMs like gpt-3.5-turbo and gpt-4",
+  "version": "0.0.3",
+  "description": "Easy embeddings for LLMs like gpt-3.5-turbo and gpt-4 using OpenAI's text-embedding-ada-002",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
