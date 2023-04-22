@@ -1,47 +1,38 @@
 const log = require("debug")("embedding.js:index");
 
-const openai = require("./openai");
-const EMBEDDING_MODEL = process.env.EMBEDDING_MODEL || "text-embedding-ada-002";
+const { HierarchicalNSW } = require("hnswlib-node");
 
-const embeddingCache = {};
-async function embed(input, model = EMBEDDING_MODEL) {
-    try {
-        if (embeddingCache[input]) return embeddingCache[input];
+const { embed } = require("./services");
 
-        const response = await openai.createEmbedding({ model, input });
-        if (!response) throw new Error('No response from OpenAI API');
-        if (!response.data) throw new Error('No data in response from OpenAI API');
-        if (!response.data.data) throw new Error('No internal data in response from OpenAI API');
-        if (response.data.data.length !== 1) throw new Error('Expected 1 embedding, got ' + response.data.data.length);
-        if (!response.data.data[0].embedding) throw new Error('No embedding in response from OpenAI API');
+class EmbeddingDatabase {
+    constructor(dimensions = 1536, limit = 1000) {
+        this.db = [];
+        this.dimensions = dimensions;
+        this.limit = 1000;
+        this.index = new HierarchicalNSW("l2", this.dimensions);
+        this.index.initIndex(this.limit);
+    }
 
-        const embedding = response.data.data[0].embedding;
-        const buffer = float32Buffer(embedding);
+    async search(query, limit = 1) {
+        const embedding = await embed(query);
+        const { distances, neighbors } = this.index.searchKnn(embedding.embedding, limit);
+        return neighbors.map((neighbor, i) => {
+            const data = this.db[neighbor].data;
+            data._distance = distances[i];
+            return data;
+        });
+    }
 
-        const output = {
-            model,
-            input,
-            embedding,
-            buffer
-        };
+    async add(obj) {
+        const embedding = await embed(obj);
 
-        embeddingCache[input] = output;
-        return output;
-    } catch (error) {
-        console.error('Error generating embeddings:', error);
-        throw error;
+        this.db.push(embedding);
+        this.index.addPoint(embedding.embedding, this.db.length - 1);
+
+        return embedding;
     }
 }
 
-async function query() {
-
-}
-
-function float32Buffer(arr) {
-    return Buffer.from(new Float32Array(arr).buffer);
-}
-
 module.exports = {
-    embed,
-    query,
+    EmbeddingDatabase,
 };

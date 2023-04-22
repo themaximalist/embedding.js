@@ -25,6 +25,7 @@
   "homepage": "https://github.com/themaximal1st/embedding.js#readme",
   "dependencies": {
     "debug": "^4.3.4",
+    "hnswlib-node": "^1.4.2",
     "openai": "^3.2.1"
   }
 }
