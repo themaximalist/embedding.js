@@ -20,6 +20,16 @@ npm install --save @themaximalist/embedding.js
 
 
 
+## Configuration
+
+To use this module, you will need an API key from OpenAI. Set the `OPENAI_API_KEY` environment variable with your API key:
+
+```bash
+export OPENAI_API_KEY=<your-openai-api-key>
+```
+
+
+
 ## Usage
 
 ```javascript
@@ -74,4 +84,4 @@ https://twitter.com/themaximal1st
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE](https://github.com/themaximal1st/embedding.js/blob/main/LICENSE) file for details.
+MIT
