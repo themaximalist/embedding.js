@@ -1,7 +1,10 @@
 const embedding = require("./index.js");
 
 (async function () {
-    const sentence = "this one is a cat, meow";
-    const embeddingResult = await embedding.embed(sentence);
-    console.log(embeddingResult);
+    const cat = await embedding.embed("this one is a cat, meow");
+    const dog = await embedding.embed("this one is a dog, woof");
+    const cow = await embedding.embed("this one is a cow, moo");
+    console.log(cat);
+    console.log(dog);
+    console.log(cow);
 })();
