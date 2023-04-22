@@ -1,6 +1,6 @@
 # embedding.js
 
-A simple in-memory embedding database that works with OpenAI's `text-embedding-ada-002` text embeddings, built on top of [hnswlib-node](https://github.com/yoshoku/hnswlib-node). Using for finding useful documents to include in `gpt-3.5-turbo` and `gpt-4` context windows.
+A simple in-memory embedding database that works with OpenAI's `text-embedding-ada-002` text embeddings, built on top of [hnswlib-node](https://github.com/yoshoku/hnswlib-node). Useful for finding relevant documents to include in `gpt-3.5-turbo` and `gpt-4` context windows.
 
 
 
