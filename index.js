@@ -24,7 +24,18 @@ class EmbeddingDatabase {
     }
 
     async add(obj) {
-        const embedding = await embed(obj);
+        let embedding = {};
+
+        if (obj.embedding) {
+            embedding = {
+                model: "text-embedding-ada-002",
+                input: obj.content,
+                data: obj,
+                embedding: obj.embedding,
+            };
+        } else {
+            embedding = await embed(obj);
+        }
 
         this.db.push(embedding);
         this.index.addPoint(embedding.embedding, this.db.length - 1);
