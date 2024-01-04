@@ -1,5 +1,7 @@
 # embedding.js
 
+**NOTE:** This repo has been archived and split into two: [embeddings.js](https://github.com/themaximal1st/embeddings.js) and [vectordb.js](https://github.com/themaximal1st/vectordb.js)
+
 A simple in-memory embedding database that works with OpenAI's `text-embedding-ada-002` text embeddings, built on top of [hnswlib-node](https://github.com/yoshoku/hnswlib-node). Useful for finding relevant documents to include in `gpt-3.5-turbo` and `gpt-4` context windows.
 
 
